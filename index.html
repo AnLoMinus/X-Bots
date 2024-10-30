@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X-Bots 0.8.1 - מערכת ניהול מתקדמת</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <nav class="sidebar" aria-label="תפריט ראשי">
+            <button class="menu-toggle" aria-label="פתח תפריט">☰</button>
+            <ul>
+                <li onclick="showSection('dashboard')" class="active" tabindex="0" role="button" aria-pressed="true">
+                    <span class="icon" aria-hidden="true">📊</span>
+                    <span class="menu-text">לוח בקרה</span>
+                </li>
+                <li onclick="showSection('bot-list')" tabindex="0" role="button" aria-pressed="false">
+                    <span class="icon" aria-hidden="true">🤖</span>
+                    <span class="menu-text">רשימת בוטים</span>
+                </li>
+                <li onclick="showSection('task-management')" tabindex="0" role="button" aria-pressed="false">
+                    <span class="icon" aria-hidden="true">📋</span>
+                    <span class="menu-text">ניהול משימות</span>
+                </li>
+                <li onclick="showSection('add-bot')" tabindex="0" role="button" aria-pressed="false">
+                    <span class="icon" aria-hidden="true">➕</span>
+                    <span class="menu-text">הוסף בוט</span>
+                </li>
+                <li onclick="showSection('settings')" tabindex="0" role="button" aria-pressed="false">
+                    <span class="icon" aria-hidden="true">⚙️</span>
+                    <span class="menu-text">הגדרות</span>
+                </li>
+                <li onclick="showSection('about')" tabindex="0" role="button" aria-pressed="false">
+                    <span class="icon" aria-hidden="true">ℹ️</span>
+                    <span class="menu-text">אודות</span>
+                </li>
+                <li onclick="showSection('updates')" tabindex="0" role="button" aria-pressed="false">
+                    <span class="icon" aria-hidden="true">🔄</span>
+                    <span class="menu-text">עדכונים</span>
+                </li>
+            </ul>
+        </nav>
+        <main class="main-content">
+            <header>
+                <div>
+                    <h1>X-Bots <span class="version">0.8.1</span></h1>
+                    <p>מערכת ניהול בוטים חכמה</p>
+                </div>
+                <div id="datetime"></div>
+            </header>
+            <div id="notifications-container"></div>
+            <div id="dashboard" class="section">
+                <h2>לוח בקרה</h2>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>סטטוס בוטים</h3>
+                        <div class="chart-container">
+                            <canvas id="botStatusChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>פעילות אחרונה</h3>
+                        <ul id="activity-log">
+                            <!-- פעילויות אחרונות יוזנו כאן -->
+                        </ul>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>ביצועי בוטים</h3>
+                        <div class="performance-grid">
+                            <div class="performance-card">
+                                <h3>זמן תגובה ממוצע</h3>
+                                <p id="avg-response-time">0ms</p>
+                            </div>
+                            <div class="performance-card">
+                                <h3>דיוק</h3>
+                                <p id="accuracy">0%</p>
+                            </div>
+                            <div class="performance-card">
+                                <h3>משימות שהושלמו</h3>
+                                <p id="completed-tasks">0</p>
+                            </div>
+                            <div class="performance-card">
+                                <h3>שביעות רצון משתמשים</h3>
+                                <p id="user-satisfaction">0%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>סטטיסטיקות מערכת</h3>
+                        <div class="chart-container">
+                            <canvas id="systemStatsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <h2>פעילויות מרכזיות</h2>
+                <div class="activities-grid">
+                    <div class="activity-card">
+                        <h3>משימות פעילות</h3>
+                        <p id="active-tasks">0</p>
+                    </div>
+                    <div class="activity-card">
+                        <h3>הודעות חדשות</h3>
+                        <p id="new-messages">0</p>
+                    </div>
+                    <div class="activity-card">
+                        <h3>התראות מערכת</h3>
+                        <p id="system-alerts">0</p>
+                    </div>
+                    <div class="activity-card">
+                        <h3>עדכונים זמינים</h3>
+                        <p id="available-updates">0</p>
+                    </div>
+                </div>
+                <h2>מידע חיוני</h2>
+                <div class="vital-info-grid">
+                    <div class="vital-info-card">
+                        <h3>שימוש במשאבים</h3>
+                        <p id="resource-usage">0%</p>
+                    </div>
+                    <div class="vital-info-card">
+                        <h3>זמן פעילות</h3>
+                        <p id="uptime">0 ימים</p>
+                    </div>
+                    <div class="vital-info-card">
+                        <h3>בוטים פעילים</h3>
+                        <p id="active-bots">0</p>
+                    </div>
+                    <div class="vital-info-card">
+                        <h3>סך כל הפעולות</h3>
+                        <p id="total-actions">0</p>
+                    </div>
+                </div>
+            </div>
+            <div id="bot-list" class="section" style="display: none;">
+                <h2>רשימת בוטים</h2>
+                <div class="search-filter-container">
+                    <input type="text" id="bot-search" placeholder="חפש בוטים...">
+                    <select id="bot-filter-status">
+                        <option value="all">כל הסטטוסים</option>
+                        <option value="active">פעיל</option>
+                        <option value="inactive">כבוי</option>
+                        <option value="pending">בהמתנה</option>
+                    </select>
+                    <select id="bot-filter-category">
+                        <option value="all">כל הקטגוריות</option>
+                        <option value="chatbot">צ'אטבוט</option>
+                        <option value="taskbot">בוט משימות</option>
+                        <option value="analyticbot">בוט אנליטיקה</option>
+                    </select>
+                </div>
+                <div id="bot-container" class="bot-container">
+                    <!-- כרטיסי הבוטים יוזנו כאן -->
+                </div>
+                <button onclick="showSection('add-bot')" class="action-btn">הוסף בוט חדש</button>
+            </div>
+            <div id="add-bot" class="section" style="display: none;">
+                <h2>הוסף בוט חדש</h2>
+                <form onsubmit="addBot(); return false;">
+                    <label for="bot-name">שם הבוט:</label>
+                    <input type="text" id="bot-name" required>
+                    <label for="bot-role">תפקיד הבוט:</label>
+                    <input type="text" id="bot-role" required>
+                    <label for="bot-status">סטטוס ראשוני:</label>
+                    <select id="bot-status">
+                        <option value="inactive">כבוי</option>
+                        <option value="active">פעיל</option>
+                        <option value="pending">בהמתנה</option>
+                    </select>
+                    <label for="bot-type">סוג הבוט:</label>
+                    <select id="bot-type">
+                        <option value="chatbot">צ'אטבוט</option>
+                        <option value="taskbot">בוט משימות</option>
+                        <option value="analyticbot">בוט אנליטיקה</option>
+                    </select>
+                    <label for="bot-description">תיאור הבוט:</label>
+                    <textarea id="bot-description" rows="4"></textarea>
+                    <button type="submit" class="action-btn">הוסף בוט</button>
+                </form>
+            </div>
+            <div id="settings" class="section" style="display: none;">
+                <h2>הגדרות מערכת</h2>
+                <form id="settings-form">
+                    <label for="theme">ערכת נושא:</label>
+                    <select id="theme">
+                        <option value="dark">כהה</option>
+                        <option value="light">בהירה</option>
+                    </select>
+                    <label for="language">שפה:</label>
+                    <select id="language">
+                        <option value="he">עברית</option>
+                        <option value="en">אנגלית</option>
+                    </select>
+                    <label for="notifications">התראות:</label>
+                    <input type="checkbox" id="notifications">
+                    <label for="auto-update">עדכון אוטומטי:</label>
+                    <input type="checkbox" id="auto-update">
+                    <button type="submit" class="action-btn">שמור הגדרות</button>
+                </form>
+            </div>
+            <div id="about" class="section" style="display: none;">
+                <h2>אודות X-Bots</h2>
+                <p>X-Bots היא מערכת ניהול בוטים מתקדמת שפותחה על ידי AnLoMinus.</p>
+                <p>גרסה נוכחית: 0.8.1</p>
+                <p>פותח על ידי: AnLoMinus</p>
+                <p>עוזר פיתוח: Claude AI</p>
+                <p>תודה מיוחדת לכל התורמים והמשתמשים של X-Bots.</p>
+            </div>
+            <div id="task-management" class="section" style="display: none;">
+                <h2>ניהול משימות</h2>
+                <div class="task-list">
+                    <!-- משימות יוצגו כאן -->
+                </div>
+                <form id="add-task-form">
+                    <h3>הוסף משימה חדשה</h3>
+                    <label for="task-name">שם המשימה:</label>
+                    <input type="text" id="task-name" required>
+                    <label for="task-description">תיאור המשימה:</label>
+                    <textarea id="task-description" rows="3"></textarea>
+                    <label for="task-bot">בוט מבצע:</label>
+                    <select id="task-bot" required>
+                        <!-- אפשרויות יוזנו דינמית -->
+                    </select>
+                    <label for="task-due-date">תאריך יעד:</label>
+                    <input type="date" id="task-due-date">
+                    <button type="submit" class="action-btn">הוסף משימה</button>
+                </form>
+            </div>
+            <div id="updates" class="section" style="display: none;">
+                <h2>עדכונים ומשימות</h2>
+                <div class="updates-container">
+                    <div class="changelog">
+                        <h3>צ'אנג'לוג</h3>
+                        <ul id="changelog-list">
+                            <!-- רשימת עדכונים תוזן כאן -->
+                        </ul>
+                    </div>
+                    <div class="update-tasks">
+                        <h3>משימות עדכון</h3>
+                        <ul id="update-tasks-list">
+                            <!-- רשימת משימות עדכון תוזן כאן -->
+                        </ul>
+                        <form id="add-update-task-form">
+                            <input type="text" id="update-task-name" placeholder="שם המשימה" required>
+                            <textarea id="update-task-description" placeholder="תיאור המשימה" rows="3"></textarea>
+                            <button type="submit" class="action-btn">הוסף משימת עדכון</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <footer>
+        <div class="footer-section">
+            <h3>סטטיסטיקות כלליות</h3>
+            <p>סך הכל בוטים: <span id="total-bots">0</span></p>
+            <p>פעולות היום: <span id="today-actions">0</span></p>
+        </div>
+        <div class="footer-section">
+            <h3>ביצועי מערכת</h3>
+            <p>זמן תגובה ממוצע: <span id="avg-response-time">0ms</span></p>
+            <p>שימוש ב-CPU: <span id="cpu-usage">0%</span></p>
+        </div>
+        <div class="footer-section">
+            <h3>עדכונים אחרונים</h3>
+            <ul id="recent-updates">
+                <!-- עדכונים אחרונים יוזנו כאן -->
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>קישורים מהירים</h3>
+            <ul>
+                <li><a href="#" onclick="showSection('dashboard')">לוח בקרה</a></li>
+                <li><a href="#" onclick="showSection('bot-list')">רשימת בוטים</a></li>
+                <li><a href="#" onclick="showSection('settings')">הגדרות</a></li>
+                <li><a href="#" onclick="showSection('about')">אודות</a></li>
+            </ul>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>

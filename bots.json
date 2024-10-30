@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Social Media Manager Bot",
+    "role": "ניהול מדיה חברתית",
+    "status": "active",
+    "category": "marketing"
+  },
+  {
+    "name": "SEO Optimizer Bot",
+    "role": "אופטימיזציית SEO",
+    "status": "pending",
+    "category": "marketing"
+  },
+  {
+    "name": "Content Idea Generator Bot",
+    "role": "יצירת רעיונות תוכן",
+    "status": "inactive",
+    "category": "marketing"
+  },
+  {
+    "name": "Lead Generation Bot",
+    "role": "יצירת לידים",
+    "status": "active",
+    "category": "sales"
+  },
+  {
+    "name": "Customer Support Bot",
+    "role": "תמיכה בלקוחות",
+    "status": "active",
+    "category": "support"
+  }
+]
